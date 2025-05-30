@@ -16,8 +16,6 @@ Audio Processing: Multer, fluent-ffmpeg
 
 Transcription & Embedding: Hugging Face APIs
 
-Translation: LibreTranslate API (or other free translation APIs)
-
 Authentication: OAuth2 Google Authentication
 
 Deployment: Render.com
