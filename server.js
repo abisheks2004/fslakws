@@ -10,7 +10,8 @@ const recordRouter = require('./routers/serverrecord');
 const authRouter = require('./routers/auth'); // ✅ Import auth router
 
 const app = express();
-const port = 5500;
+const port = process.env.PORT || 5500;
+
 
 // Middleware
 app.use(cors({ origin: '*', methods: ['GET', 'POST'] }));
