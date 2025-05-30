@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FSLAKWS System</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+
+  <div class="container">
+    <h1>Few-Shot Language-Agnostic Keyword Spotting (FSLAKWS)</h1>
+
+    <div class="flex-container">
+      <!-- Record Section -->
+      <div class="section">
+        <h2>Record Audio</h2>
+        <button id="recordBtn">🎙️ Start Recording</button>
+        <button id="stopBtn" disabled>⏹️ Stop Recording</button>
+        <input type="text" id="recordKeyword" placeholder="Enter keyword" />
+        <button id="detectBtn" disabled>🔍 Detect</button>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="section">
+        <h2>Upload Audio</h2>
+        <input type="file" id="audioFile" accept="audio/*" name="audio" />
+        <input type="text" id="uploadKeyword" placeholder="Enter keyword" />
+        <button id="uploadBtn">Upload and Detect</button>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="parent-container" class="result" >
+      <h2>Results🎯</h2>
+         <div id="result"></div>
+    </div>
+  </div>
+
+<script src="utils.js" defer></script>
+<script src="record.js" defer></script>
+<script src="upload.js" defer></script>
+
+   
+</body>
+</html>

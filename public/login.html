@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FSLAKWS | Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(to right, #0391ef, #09bcb6);
+      color: white;
+    }
+    .card {
+      background: white;
+      color: #333;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    .card h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    .card p {
+      font-size: 1rem;
+      margin-bottom: 30px;
+      color: #555;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      color: #444;
+      padding: 12px 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      margin: 10px 0;
+    }
+    .btn:hover {
+      background-color: #f0f0f0;
+    }
+    .btn img {
+      width: 20px;
+      margin-right: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Welcome to FSLAKWS</h1>
+    <p>Sign in with Google or continue without signing in to use the keyword spotting system.</p>
+
+    <!-- Google Sign-In -->
+    <a href="/auth/google" class="btn">
+      <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" />
+      Sign in with Google
+    </a>
+
+    <!-- Guest Access -->
+    <a href="/index.html" class="btn">
+      <img src="https://img.icons8.com/ios-filled/50/user.png" alt="Guest icon" style="width: 20px;" />
+      Continue without Sign In
+    </a>
+  </div>
+</body>
+</html>
