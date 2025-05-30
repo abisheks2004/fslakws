@@ -131,3 +131,46 @@ button:active {
 #parent-container {
   display: block !important;
 }
+
+@media (max-width: 600px) {
+  .container {
+    width: 98%;
+    padding: 10px;
+  }
+
+  .section,
+  .result {
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 18px;
+  }
+
+  .flex-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input[type="file"],
+  input[type="text"],
+  button,
+  .keyword {
+    font-size: 15px;
+    padding: 8px;
+    margin-top: 8px;
+  }
+
+  #resultText,
+  #transcriptionText {
+    font-size: 18px;
+  }
+
+  .result {
+    height: auto;
+    min-height: 120px;
+  }
+}
