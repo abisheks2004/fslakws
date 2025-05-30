@@ -50,11 +50,10 @@ app.get('/login', (req, res) => {
 });
 
 // ✅ Serve dashboard (index.html) only after login
-app.get('/index.html', (req, res) => {
+app.get('/dashboard', (req, res) => {
   if (!req.isAuthenticated()) return res.redirect('/login');
-  res.redirect('/dashboard');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
 
 // ✅ Logout route
 app.get('/logout', (req, res, next) => {
