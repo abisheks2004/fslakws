@@ -1,22 +1,48 @@
-FSLAKWS (Few-Shot Language-Agnostic Keyword Spotting)
+# 🧠 FSLAKWS (Few-Shot Language-Agnostic Keyword Spotting)
 
-Demo
+**FSLAKWS** is a smart, multilingual keyword detection system built with React and Node.js that uses few-shot learning to detect keywords in audio — even across different languages — using semantic similarity and transcription.
 
-Try the live application here:
+🚀 **Live Demo**: [https://fslakws.onrender.com/login](https://fslakws.onrender.com/login)
 
-https://fslakws.onrender.com/login
+---
 
-Technologies Used
+## 🔍 Key Features
 
-Frontend: React, HTML5 Audio API, CSS
+- 🎙 **Audio Upload & Recording**: Upload pre-recorded audio or record in real-time
+- 🌐 **Language-Agnostic Detection**: Works across multiple languages using translation & semantic matching
+- ⚡ **Few-Shot Learning**: Detects keywords even with very few training examples
+- 🔐 **Google OAuth2 Authentication**: Secure user access
+- 💡 **Fast & Lightweight**: Optimized for speed, scalability, and low resource usage
 
-Backend: Node.js, Express.js
+---
 
-Audio Processing: Multer, fluent-ffmpeg
+## 🛠 Technologies Used
 
-Transcription & Embedding: Hugging Face APIs
+| Layer        | Tools/Tech                                         |
+|--------------|----------------------------------------------------|
+| **Frontend** | React, HTML5 Audio API, CSS                        |
+| **Backend**  | Node.js, Express.js                                |
+| **Audio**    | Multer (file uploads), fluent-ffmpeg               |
+| **AI/ML**    | Hugging Face APIs (Whisper, Sentence Transformers) |
+| **Auth**     | Google OAuth2                                      |
+| **Deploy**   | Render.com                                         |
 
-Authentication: OAuth2 Google Authentication
+---
 
-Deployment: Render.com
+## 🧪 How It Works
+
+1. **User Uploads or Records Audio**
+2. **Speech-to-Text Transcription** using Whisper (Hugging Face)
+3. **Keyword Translation** to multiple languages
+4. **Semantic Embedding & Matching** between transcription and keywords
+5. **Output**: Keyword presence & context with highlighting
+
+---
+
+- 🔐 Login Page  
+- 🏠 Dashboard with Upload/Record Options  
+- 📊 Results Display with Highlighted Keyword  
+
+---
+
 
