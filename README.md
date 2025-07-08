@@ -20,7 +20,7 @@
 
 | Layer        | Tools/Tech                                         |
 |--------------|----------------------------------------------------|
-| **Frontend** | React, HTML5 Audio API, CSS                        |
+| **Frontend** | HTML5 Audio API, CSS                        |
 | **Backend**  | Node.js, Express.js                                |
 | **Audio**    | Multer (file uploads), fluent-ffmpeg               |
 | **AI/ML**    | Hugging Face APIs (Whisper, Sentence Transformers) |
