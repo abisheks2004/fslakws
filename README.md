@@ -1,6 +1,6 @@
 # 🧠 FSLAKWS (Few-Shot Language-Agnostic Keyword Spotting)
 
-**FSLAKWS** is a smart, multilingual keyword detection system built with React and Node.js that uses few-shot learning to detect keywords in audio — even across different languages — using semantic similarity and transcription.
+**FSLAKWS** is a smart, multilingual keyword detection system built with Node.js that uses few-shot learning to detect keywords in audio — even across different languages — using semantic similarity and transcription.
 
 🚀 **Live Demo**: [https://fslakws.onrender.com/login](https://fslakws.onrender.com/login)
 
