@@ -10,7 +10,6 @@
 
 - 🎙 **Audio Upload & Recording**: Upload pre-recorded audio or record in real-time
 - 🌐 **Language-Agnostic Detection**: Works across multiple languages using translation & semantic matching
-- ⚡ **Few-Shot Learning**: Detects keywords even with very few training examples
 - 🔐 **Google OAuth2 Authentication**: Secure user access
 - 💡 **Fast & Lightweight**: Optimized for speed, scalability, and low resource usage
 
