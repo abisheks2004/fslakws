@@ -1,61 +1,152 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const uploadBtn = document.getElementById('uploadBtn');
+document.addEventListener("DOMContentLoaded", () => {
+  const uploadBtn = document.getElementById("uploadBtn");
+  const fileInput = document.getElementById("audioFile");
+  const keywordInput = document.getElementById("uploadKeyword");
 
-  uploadBtn.addEventListener('click', async () => {
-    const file = document.getElementById('audioFile')?.files?.[0];
-    const keyword = document.getElementById('uploadKeyword')?.value?.trim();
+  const resultBox = document.getElementById("uploadResultBox");
+  const loadingChip = document.getElementById("uploadLoading");
+  const resultEl = document.getElementById("uploadResult");
+  const metaEl = document.getElementById("uploadMeta");
+  const timerEl = document.getElementById("uploadTimer");
 
-    if (!file) return alert('Please select a file to upload');
-    if (!keyword) return alert('Please enter a keyword');
+  if (!uploadBtn) return;
 
-    const allowedTypes = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/mp3'];
-    if (!allowedTypes.includes(file.type)) {
-      return alert(`Unsupported file type: ${file.type}`);
+  function resetResult() {
+    if (resultEl) resultEl.innerHTML = "";
+    if (metaEl) metaEl.textContent = "";
+    if (resultBox) resultBox.classList.remove("show");
+    if (timerEl) {
+      timerEl.classList.add("hidden");
+      timerEl.querySelector("span").textContent = "0.00s";
+    }
+  }
+
+  function setLoading(isLoading) {
+    if (!loadingChip) return;
+    if (isLoading) {
+      loadingChip.classList.remove("hidden");
+      uploadBtn.disabled = true;
+    } else {
+      loadingChip.classList.add("hidden");
+      uploadBtn.disabled = false;
+    }
+  }
+
+  function setTimerDuration(seconds) {
+    if (!timerEl) return;
+    timerEl.classList.remove("hidden");
+    timerEl.querySelector("span").textContent = `${seconds.toFixed(2)}s`;
+  }
+
+  uploadBtn.addEventListener("click", async () => {
+    const files = Array.from(fileInput?.files || []);
+    const keyword = keywordInput?.value?.trim();
+
+    if (!files.length) {
+      alert("Please select at least one audio file to upload");
+      return;
+    }
+    if (!keyword) {
+      alert("Please enter a keyword");
+      return;
     }
 
-    const formData = new FormData();
-    formData.append('audioFile', file);
-    formData.append('keyword', keyword);
+    const allowedTypes = ["audio/wav", "audio/mpeg", "audio/webm", "audio/mp3"];
+    const invalid = files.find((file) => !allowedTypes.includes(file.type));
 
-    // ✅ Show loading message
-    const resultEl = document.getElementById('result');
-    resultEl.innerHTML = `<p><em>Waiting for result...</em></p>`;
+    if (invalid) {
+      alert(`Unsupported file type: ${invalid.type}`);
+      return;
+    }
+
+    resetResult();
+    setLoading(true);
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("audioFile", file);
+    });
+    formData.append("keyword", keyword);
+
+    const startTime = performance.now(); // ⏱️ start
 
     try {
-      const res = await fetch('/upload', {
-        method: 'POST',
-        body: formData
+      const res = await fetch("/upload", {
+        method: "POST",
+        body: formData,
       });
 
       const data = await res.json();
+
       if (!res.ok) {
-        resultEl.innerHTML = `<p style="color: red;">Error: ${data.error || 'Upload failed'}</p>`;
+        if (resultEl) {
+          resultEl.innerHTML = `<p style="color: red;">Error: ${
+            data.error || "Upload failed"
+          }</p>`;
+        }
+        if (metaEl) metaEl.textContent = "";
+        if (resultBox) resultBox.classList.add("show");
         return;
       }
 
-      displayResult({ ...data, keyword });
+      if (Array.isArray(data.results)) {
+        data.results.forEach((fileResult) => {
+          const { fileName, error } = fileResult;
+
+          if (error && resultEl) {
+            resultEl.innerHTML += `
+              <div class="result-card">
+                <div class="result-card-title">File: ${fileName || "Unknown file"}</div>
+                <p style="color: red;">${error}</p>
+              </div>
+            `;
+            return;
+          }
+
+          if (typeof window.displayResult === "function") {
+            window.displayResult({
+              ...fileResult,
+              keyword: data.keyword || keyword,
+              fileName,
+              _append: true,
+            });
+          } else if (resultEl) {
+            resultEl.innerHTML += `
+              <div class="result-card">
+                <div class="result-card-title">File: ${fileName || "File"}</div>
+                <p><strong>Keyword Found:</strong> ${
+                  fileResult.result ? "Yes ✅" : "No ❌"
+                }</p>
+                <p><strong>Matched Keyword:</strong> ${
+                  fileResult.matchedKeyword || "-"
+                }</p>
+                <p><strong>Transcription:</strong><br>${
+                  fileResult.transcription || "N/A"
+                }</p>
+              </div>
+            `;
+          }
+        });
+
+        if (metaEl) {
+          metaEl.textContent = `Processed ${data.results.length} file(s).`;
+        }
+        if (resultBox) {
+          resultBox.classList.add("show");
+        }
+      }
     } catch (err) {
-      console.error('Upload failed:', err);
-      resultEl.innerHTML = `<p style="color: red;">Something went wrong during upload.</p>`;
+      console.error("Upload failed:", err);
+      if (resultEl) {
+        resultEl.innerHTML =
+          '<p style="color: red;">Something went wrong during upload.</p>';
+      }
+      if (metaEl) metaEl.textContent = "";
+      if (resultBox) resultBox.classList.add("show");
+    } finally {
+      setLoading(false);
+      const elapsed = (performance.now() - startTime) / 1000;
+      setTimerDuration(elapsed); // ⏱️ show total time
     }
   });
 });
-
-function displayResult(data) {
-  const resultEl = document.getElementById('result');
-  resultEl.innerHTML = `
-    <p><strong>Keyword Found:</strong> ${data.result ? 'Yes ✅' : 'No ❌'}</p>
-    <p><strong>Matched Keyword:</strong> ${data.matchedKeyword || '-'}</p>
-    <p><strong>Transcription:</strong> ${highlightKeyword(data.transcription, data.matchedKeyword)}</p>
-  `;
-}
-
-function highlightKeyword(text = '', keyword = '') {
-  if (!keyword) return text;
-  const regex = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
-  return text.replace(regex, '<span style="background: yellow;">$1</span>');
-}
-
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
