@@ -1,176 +1,362 @@
+/* ========== GLOBAL THEME VARIABLES ========== */
 :root {
-  --primary-color: #000000; /* Blue (used as hover) */
-  --secondary-color: #1565C0; /* Darker Blue */
-  --background-color: #E3F2FD; /* Light Blue Background */
-  --text-color: #0D47A1; /* Dark Blue Text */
-  --container-bg-color: #FFFFFF; /* White Container Background */
-  --container-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  --result-bg-color: #E3F2FD; /* Light Blue Result Background */
-  --result-border-color: #1E88E5; /* Blue Result Border */
-  --font-family: 'Roboto', Arial, sans-serif;
+  --primary-color: #0d47a1;
+  --primary-dark: #002171;
+  --secondary-color: #1565c0;
+  --accent-color: #ffb300;
+  --danger-color: #d32f2f;
+
+  --background-gradient: radial-gradient(circle at top left, #e3f2fd 0, #bbdefb 40%, #90caf9 100%);
+  --surface-color: rgba(255, 255, 255, 0.96);
+  --surface-glass: rgba(255, 255, 255, 0.85);
+
+  --text-color: #0d1b2a;
+  --muted-text: #546e7a;
+
+  --container-shadow: 0 16px 45px rgba(13, 71, 161, 0.28);
+  --border-subtle: 1px solid rgba(13, 71, 161, 0.12);
+
+  --radius-lg: 20px;
+  --radius-xl: 26px;
+
+  --font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
+/* ========== RESET & BASE ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
 body {
-  font-family: var(--font-family);
-  background-color: var(--background-color);
-  color: var(--text-color);
   margin: 0;
   padding: 0;
 }
 
+body {
+  min-height: 100vh;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background: var(--background-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  /* subtle animated gradient */
+  background-size: 140% 140%;
+  animation: gradientMove 18s ease-in-out infinite alternate;
+}
+
+/* For pages that are not the home, we still want center + full height */
+.page-body {
+  background: var(--background-gradient);
+}
+
+/* Wrapper to position back button */
+.page-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  z-index: 2;
+}
+
+/* ========== CONTAINER / CARD ========== */
 .container {
-  width: 85%;
-  margin: 30px auto;
-  background-color: var(--container-bg-color);
-  padding: 20px;
-  border-radius: 12px;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--surface-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 28px 28px 30px;
+  border-radius: var(--radius-xl);
   box-shadow: var(--container-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: var(--border-subtle);
+  /* card entrance animation */
+  animation: cardPop 0.35s ease-out;
 }
 
-.container:hover {
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+/* Hover lift on desktop only */
+@media (hover: hover) {
+  .container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 60px rgba(13, 71, 161, 0.32);
+    transition: all 0.25s ease-out;
+  }
 }
 
+/* ========== TYPOGRAPHY ========== */
 h1 {
+  margin: 0 0 10px;
   text-align: center;
-  color: var(--primary-color);
-  margin-bottom: 30px;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+  color: var(--primary-dark);
 }
 
+.subtitle {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 0.98rem;
+  color: var(--muted-text);
+}
+
+/* Section titles inside card (like Result 🎯) */
+h2 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  color: var(--primary-dark);
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--secondary-color);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(21, 101, 192, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.18s ease;
+  text-decoration: none;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.btn.secondary {
+  background: #ffffff;
+  color: var(--primary-color);
+  border: 1px solid rgba(21, 101, 192, 0.3);
+  box-shadow: 0 4px 12px rgba(13, 71, 161, 0.15);
+}
+
+.btn.danger {
+  background: var(--danger-color);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(13, 71, 161, 0.4);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(13, 71, 161, 0.45);
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ========== FORM INPUTS ========== */
+input[type="file"],
+input[type="text"],
+.keyword {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(13, 71, 161, 0.28);
+  font-size: 0.95rem;
+  outline: none;
+  background-color: #f8fbff;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, transform 0.15s ease;
+}
+
+input[type="text"]:focus,
+.keyword:focus,
+input[type="file"]:focus-visible {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(13, 71, 161, 0.2);
+  background-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.field-label {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--muted-text);
+}
+
+/* ========== SECTION BLOCKS ========== */
 .section {
-  margin-bottom: 20px;
-  background-color: var(--result-bg-color);
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 4px solid var(--result-border-color);
-  box-shadow: var(--container-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 20px;
+  padding: 18px 18px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-color);
+  border: var(--border-subtle);
+  box-shadow: 0 8px 22px rgba(15, 76, 129, 0.12);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .section:hover {
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(15, 76, 129, 0.16);
 }
 
-.flex-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.flex-item {
-  flex: 1;
-}
-
-input[type="file"],
-input[type="text"],
-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-input[type="text"] {
-  border: 1px solid var(--primary-color);
-  padding: 8px;
-}
-
-button {
-  background-color: var(--secondary-color);
-  color: white;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-button:hover {
-  background-color: var(--primary-color);
-  transform: scale(1.05);
-}
-
-/* ✅ Change button color when clicked */
-button:active {
-  background-color: #000000;
-  transform: scale(0.98);
-}
-
+/* ========== RESULT BOX ========== */
 .result {
-  background-color: var(--result-bg-color);
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 20px;
-  border-left: 4px solid var(--result-border-color);
-  box-shadow: var(--container-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 180px;
-}
-
-.result:hover {
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  margin-top: 22px;
+  padding: 16px 18px 18px;
+  border-radius: var(--radius-lg);
+  background: #e3f2fd;
+  border-left: 4px solid var(--primary-color);
+  box-shadow: 0 10px 28px rgba(13, 71, 161, 0.18);
 }
 
 #resultText,
 #transcriptionText {
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 1.05rem;
+  font-weight: 600;
   color: var(--text-color);
 }
 
-.keyword {
-  width: 100%;
-  padding: 10px;
+/* ========== LOADING SPINNER (Detecting...) ========== */
+.loading-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(13, 71, 161, 0.06);
+  border: 1px solid rgba(13, 71, 161, 0.18);
+  font-size: 0.85rem;
+  color: var(--muted-text);
   margin-top: 10px;
-  border: 1px solid var(--secondary-color);
-  border-radius: 8px;
-  font-size: 16px;
 }
 
-#parent-container {
-  display: block !important;
+.loading-chip.hidden {
+  display: none;
 }
 
-@media (max-width: 600px) {
-  .container {
-    width: 98%;
-    padding: 10px;
+.loader-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(13, 71, 161, 0.15);
+  border-top-color: var(--primary-color);
+  animation: spin 0.65s linear infinite;
+}
+
+/* ========== RESULT CONTENT & KEYWORD HIGHLIGHT ========== */
+.result-content {
+  margin-top: 6px;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.keyword-hit {
+  background: #fff3cd;
+  color: #e65100;
+  padding: 2px 5px;
+  border-radius: 6px;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(255, 193, 7, 0.5);
+}
+
+.result-meta {
+  font-size: 0.8rem;
+  color: var(--muted-text);
+  margin-top: 6px;
+}
+
+.result.show {
+  animation: fadeInUp 0.25s ease-out;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  body,
+  .page-body {
+    padding: 14px;
   }
 
-  .section,
-  .result {
-    padding: 12px;
-    margin-top: 12px;
-    font-size: 15px;
+  .container {
+    padding: 20px 16px 22px;
+    border-radius: 18px;
   }
 
   h1 {
-    font-size: 1.5em;
-    margin-bottom: 18px;
+    font-size: 1.6rem;
   }
 
-  .flex-container {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  input[type="file"],
-  input[type="text"],
-  button,
-  .keyword {
-    font-size: 15px;
-    padding: 8px;
-    margin-top: 8px;
-  }
-
-  #resultText,
-  #transcriptionText {
-    font-size: 18px;
-  }
-
-  .result {
-    height: auto;
-    min-height: 120px;
+  .subtitle {
+    font-size: 0.9rem;
   }
 }
+
+/* ========== KEYFRAMES ========== */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
+@keyframes cardPop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Each file's result card inside uploadResult */
+.result-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(13, 71, 161, 0.12);
+  border: 1px solid rgba(13, 71, 161, 0.12);
+}
+
+.result-card-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: var(--muted-text);
+}
+
