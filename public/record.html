@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Record Audio - FSLAKWS</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./ur.css" />
+</head>
+<body class="page-body">
+
+  <div class="page-wrapper">
+    <a href="index.html" class="back-btn">← Back</a>
+    <!-- ⏱️ Timer for record page -->
+  <div id="recordTimer" class="timer-badge hidden">
+    Time: <span>0.00s</span>
+  </div>
+    <div class="container">
+      <h1>Record Audio</h1>
+
+      <div class="section">
+        <button id="recordBtn" class="btn primary">🎙️ Start Recording</button>
+        <button id="stopBtn" class="btn danger" disabled>⏹️ Stop Recording</button>
+
+        <input type="text" id="recordKeyword" class="keyword" placeholder="Enter keyword" />
+        <button id="detectBtn" class="btn" disabled>🔍 Detect</button>
+      </div>
+
+     <div id="recordResultBox" class="result">
+  <h2>Result 🎯</h2>
+
+  <!-- Loading indicator -->
+  <div id="recordLoading" class="loading-chip hidden">
+    <div class="loader-circle"></div>
+    <span>Detecting…</span>
+  </div>
+
+  <!-- Actual result content -->
+  <div id="recordResult" class="result-content"></div>
+
+  <!-- Optional meta: language, confidence, duration etc. -->
+  <div id="recordMeta" class="result-meta"></div>
+</div>
+    </div>
+  </div>
+
+  <script src="utils.js" defer></script>
+  <script src="record.js" defer></script>
+</body>
+</html>
