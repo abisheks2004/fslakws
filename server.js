@@ -7,7 +7,7 @@ const passport = require('passport');
 
 const uploadRouter = require('./routers/serverupload');
 const recordRouter = require('./routers/serverrecord');
-const authRouter = require('./routers/auth'); // ✅ Import auth router
+const authRouter = require('./routers/auth'); 
 
 const app = express();
 const port = process.env.PORT || 5500;
@@ -36,7 +36,7 @@ if (!fs.existsSync(uploadDir)) {
 // Routes
 app.use(uploadRouter);
 app.use(recordRouter);
-app.use(authRouter); // ✅ Enable auth routes
+app.use(authRouter); 
 
 // 🔐 Redirect root to login if not authenticated
 app.get('/', (req, res) => {
