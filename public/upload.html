@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Audio - FSLAKWS</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./ur.css" />
+</head>
+<body class="page-body">
+
+  <div class="page-wrapper">
+    <a href="index.html" class="back-btn">← Back</a>
+    
+     <!-- ⏱️ Timer for upload page -->
+  <div id="uploadTimer" class="timer-badge hidden">
+    Time: <span>0.00s</span>
+  </div>
+    <div class="container">
+      <h1>Upload Audio</h1>
+
+      <div class="section">
+        <label class="field-label">Select audio file</label>
+        <input type="file" id="audioFile" accept="audio/*" multiple />
+
+        <label class="field-label">Enter keyword</label>
+        <input type="text" id="uploadKeyword" class="keyword" placeholder="Enter keyword" />
+
+        <button id="uploadBtn" class="btn primary">📤 Upload & Detect</button>
+      </div>
+
+      <div id="uploadResultBox" class="result">
+  <h2>Result 🎯</h2>
+
+  <!-- Loading indicator -->
+  <div id="uploadLoading" class="loading-chip hidden">
+    <div class="loader-circle"></div>
+    <span>Detecting…</span>
+  </div>
+
+  <!-- Actual result content -->
+  <div id="uploadResult" class="result-content"></div>
+
+  <!-- Optional meta info -->
+  <div id="uploadMeta" class="result-meta"></div>
+</div>
+
+    </div>
+  </div>
+
+  <script src="utils.js" defer></script>
+  <script src="upload.js" defer></script>
+</body>
+</html>
